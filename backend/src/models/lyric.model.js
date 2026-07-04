@@ -1,13 +1,15 @@
 export function createLyricLine({
-  time = null,
+  timestamp = null,
   original = "",
   romaji = null,
-  translation = null
+  translation = null,
+  metadata = {}
 }) {
   return {
-    time,
+    timestamp,
     original,
     romaji,
-    translation
+    translation,
+    metadata
   };
 }

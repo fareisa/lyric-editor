@@ -7,28 +7,24 @@ class KuroshiroProvider {
 
   #kuroshiro = new Kuroshiro();
 
-  #ready = false;
+  #initialized = false;
 
   async initialize() {
-    if (this.#ready) {
+    if (this.#initialized) {
       return;
     }
     await this.#kuroshiro.init(
       new KuromojiAnalyzer()
     );
-    this.#ready = true;
+    this.#initialized = true;
   }
 
   async convert(text) {
     await this.initialize();
-
-    return await this.#kuroshiro.convert(
-      text,
-      {
-        to: "romaji",
-        mode: "spaced"
-      }
-    );
+    return this.#kuroshiro.convert(text, {
+      to: "romaji",
+      mode: "spaced"
+    });
   }
 
 }
