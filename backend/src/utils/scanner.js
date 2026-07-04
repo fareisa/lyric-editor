@@ -1,13 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-const SUPPORTED_FORMATS = new Set([
-  ".mp3",
-  ".flac",
-  ".m4a",
-  ".ogg",
-  ".wav"
-]);
+import {SUPPORTED_AUDIO_FORMATS} from "../constants/audio.js";
 
 export async function scanDirectory(directory) {
   const files = [];
@@ -34,7 +28,7 @@ async function walk(directory, files) {
       path.extname(entry.name)
         .toLowerCase();
 
-    if (!SUPPORTED_FORMATS.has(extension)) {
+    if (!SUPPORTED_AUDIO_FORMATS.has(extension)) {
       continue;
     }
 

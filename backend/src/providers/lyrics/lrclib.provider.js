@@ -1,9 +1,10 @@
 import axios from "axios";
+import config from "../../config/env.js";
 
 class LrcLibProvider {
 	async fetch(song) {
 			const response = await axios.get(
-				"https://lrclib.net/api/search",
+				`${config.lrclibBaseUrl}/api/search`,
 				{
 					params: {
 						artist_name: song.artist,
