@@ -1,5 +1,7 @@
-import Kuroshiro from "kuroshiro";
 import KuromojiAnalyzer from "kuroshiro-analyzer-kuromoji";
+import KuroshiroModule from "kuroshiro";
+
+const Kuroshiro = KuroshiroModule.default;
 
 class KuroshiroProvider {
 
