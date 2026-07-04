@@ -1,7 +1,6 @@
 import Fastify from "fastify";
 
-import lyricsRoute from "./routes/lyrics.js";
-import songsRoute from "./routes/songs.js";
+import songsRoute from "./routes/songs.routes.js";
 
 const app = Fastify({
   logger: true,
@@ -11,10 +10,6 @@ app.get("/api/health", async () => {
   return {
     status: "ok",
   };
-});
-
-app.register(lyricsRoute, {
-  prefix: "/api"
 });
 
 app.register(songsRoute, {
