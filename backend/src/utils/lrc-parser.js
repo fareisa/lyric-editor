@@ -17,7 +17,7 @@ export function parseLrc(text) {
         continue;
       result.push(
         createLyricLine({          
-          time: match[1],
+          timestamp: match[1],
           original:
             match[2].trim()
           })

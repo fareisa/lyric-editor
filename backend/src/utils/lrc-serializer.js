@@ -7,10 +7,9 @@ export function serializeLrc(lines, output) {
       if (!line[field])
         continue;
       result.push(
-        `[${line.time}]${line[field]}`
+        `[${line.timestamp}]${line[field]}`
       );
     }
-
   }
   
   return result.join("\n");
