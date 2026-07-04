@@ -14,14 +14,20 @@ export function parseLrc(text) {
             /^\[(.*?)\](.*)$/
           );
       if (!match)
-        continue;
+      continue;
+      
+      const lyric = match[2].trim();
+
+      const [original, translation] =
+        lyric.split("_BREAK_");
+
       result.push(
-        createLyricLine({          
+        createLyricLine({
           timestamp: match[1],
-          original:
-            match[2].trim()
-          })
-      );
+          original: original?.trim() ?? "",
+          translation: translation?.trim() ?? null
+        })
+      ); 
     }
     return result;
 }
