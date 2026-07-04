@@ -17,6 +17,14 @@ import {
   fetchLyrics
 } from "../handlers/songs.handler.js";
 
+import {
+  transformLyricsSchema
+} from "../schemas/transform.schema.js";
+
+import {
+  transformLyrics
+} from "../handlers/transform.handler.js";
+
 export default async function (app) {
 
   app.get(
@@ -38,9 +46,15 @@ export default async function (app) {
   );
 
   app.post(
-    "/songs/:id/fetch",
+    "/songs/:id/lyrics/fetch",
     fetchLyricsSchema,
     fetchLyrics
+  );
+
+  app.post(
+    "/songs/:id/lyrics/transform",
+    transformLyricsSchema,
+    transformLyrics
   );
 
 }

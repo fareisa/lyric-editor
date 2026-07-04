@@ -1,6 +1,6 @@
 import songService from "../services/song.service.js";
 import lyricService from "../services/lyric.service.js";
-import fetchService from "../services/lyrics-fetch.service.js";
+import fetchService from "../services/lyrics-provider.service.js";
 import NotFoundError from "../errors/not-found.error.js";
 
 export async function listSongs() {
