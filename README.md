@@ -1,0 +1,1 @@
+# Just simple app for managing lyric my local music
