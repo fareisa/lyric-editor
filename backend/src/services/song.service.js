@@ -4,8 +4,15 @@ import path from "node:path";
 
 import config from "../config/env.js";
 
-import { scanDirectory } from "../utils/scanner.js";
-import { readMetadata } from "../utils/metadata.js";
+import { 
+	scanDirectory 
+} 
+from "../utils/scanner.js";
+
+import { 
+	readMetadata 
+} 
+from "../utils/metadata.js";
 
 function createSongId(fullPath) {
 	const relative = path.relative(

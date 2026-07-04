@@ -1,7 +1,10 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import {SUPPORTED_AUDIO_FORMATS} from "../constants/audio.js";
+import {
+  SUPPORTED_AUDIO_FORMATS
+} 
+from "../constants/audio.js";
 
 export async function scanDirectory(directory) {
   const files = [];
