@@ -10,29 +10,23 @@ const SUPPORTED_FORMATS = new Set([
 ]);
 
 export async function scanDirectory(directory) {
-  const songs = [];
-
-  await walk(directory, songs);
-
-  return songs;
+  const files = [];
+  await walk(directory, files);
+  return files;
 }
 
-async function walk(directory, songs) {
+async function walk(directory, files) {
   const entries = await fs.readdir(directory, {
     withFileTypes: true
   });
 
   for (const entry of entries) {
-
     const fullPath = path.join(
-      directory,
-      entry.name
+      directory, entry.name
     );
 
     if (entry.isDirectory()) {
-
-      await walk(fullPath, songs);
-
+      await walk(fullPath, files);
       continue;
     }
 
@@ -44,9 +38,15 @@ async function walk(directory, songs) {
       continue;
     }
 
-    songs.push({
+    files.push({
       fullPath,
-      extension
+      filename: entry.name,
+      basename:
+        path.basename(
+          entry.name,
+          extension
+        ),
+      extension 
     });
   }
 }
