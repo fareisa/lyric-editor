@@ -5,11 +5,18 @@ const EditorContext = createContext();
 export function EditorProvider({ children }) {
 
   const [selectedSong, setSelectedSong] = useState(null);
+
+  const [sourceType, setSourceType] = useState(null);
   const [sourceContent, setSourceContent] = useState("");
+
   const [editorContent, setEditorContentState] = useState("");
+
   const [loadingLyrics, setLoadingLyrics] = useState(false);
 
-  const [profile, setProfile] = useState("original-translation");
+  const [profile, setProfile] = useState(
+    "original-romaji"
+  );
+
   const [dirty, setDirty] = useState(false);
 
   function updateEditorContent(value) {
@@ -17,21 +24,28 @@ export function EditorProvider({ children }) {
     setDirty(true);
   }
 
-  function loadLyricsFromDisk(value) {
-    setSourceContent(value);
-    setEditorContentState(value);
-    setDirty(false);
-  }
+  function loadSourceLyrics({
+    type,
+    lyrics,
+    dirty
+  }) {
 
-  function loadFetchedLyrics(value) {
-    setSourceContent(value);
-    setEditorContentState(value);
-    setDirty(true);
+    setSourceType(type);
+
+    setSourceContent(lyrics);
+
+    setEditorContentState(lyrics);
+
+    setDirty(dirty);
+
   }
 
   function saveEditorContent() {
+
     setSourceContent(editorContent);
+
     setDirty(false);
+
   }
 
   const value = {
@@ -39,13 +53,13 @@ export function EditorProvider({ children }) {
     selectedSong,
     setSelectedSong,
 
+    sourceType,
     sourceContent,
 
     editorContent,
     updateEditorContent,
 
-    loadLyricsFromDisk,
-    loadFetchedLyrics,
+    loadSourceLyrics,
 
     saveEditorContent,
 

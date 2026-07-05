@@ -6,7 +6,7 @@ export default function useFetchLyrics() {
 
   const {
     selectedSong,
-    loadFetchedLyrics
+    loadSourceLyrics
   } = useEditor();
 
   const {
@@ -23,15 +23,19 @@ export default function useFetchLyrics() {
       return;
     }
 
-    const result = await fetchLyrics(
-      selectedSong.id
-    );
+    const result =
+      await fetchLyrics(
+        selectedSong.id
+      );
 
-    loadFetchedLyrics(
-      result.syncedLyrics ??
-      result.plainLyrics ??
-      ""
-    );
+    loadSourceLyrics({
+      type: "external",
+      lyrics:
+        result.syncedLyrics ??
+        result.plainLyrics ??
+        "",
+      dirty: true
+    });
 
   }
 

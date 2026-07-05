@@ -4,25 +4,46 @@ import { getLyrics } from "../api/lyrics";
 export default function useLyrics() {
 
   const {
-    loadLyricsFromDisk,
+    loadSourceLyrics,
     loadingLyrics,
     setLoadingLyrics
   } = useEditor();
 
   async function loadLyrics(song) {
+
     setLoadingLyrics(true);
-    loadLyricsFromDisk("");
+
+    loadSourceLyrics({
+      type: "local",
+      lyrics: "",
+      dirty: false
+    });
 
     try {
-      const result = await getLyrics(song.id);
-      loadLyricsFromDisk(
-        result.lyrics ?? ""
-      );
+
+      const result =
+        await getLyrics(song.id);
+
+      loadSourceLyrics({
+        type: "local",
+        lyrics: result.lyrics ?? "",
+        dirty: false
+      });
+
     } catch {
-      loadLyricsFromDisk("");
+
+      loadSourceLyrics({
+        type: "local",
+        lyrics: "",
+        dirty: false
+      });
+
     } finally {
+
       setLoadingLyrics(false);
+
     }
+
   }
 
   return {
