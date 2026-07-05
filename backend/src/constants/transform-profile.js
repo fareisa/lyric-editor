@@ -1,38 +1,72 @@
 const transformProfiles = {
-  legacy: ["legacy"],
 
-  original: [
-    "original"
-  ],
+  "original-romaji": {
+    output: [
+      "original",
+      "romaji"
+    ],
+    romaji: true,
+    translate: false
+  },
 
-  romaji: [
-    "romaji"
-  ],
+  "original-translation": {
+    output: [
+      "original",
+      "translation"
+    ],
+    romaji: false,
+    translate: true
+  },
 
-  translation: [
-    "translation"
-  ],
+  "romaji-translation": {
+    output: [
+      "romaji",
+      "translation"
+    ],
+    romaji: true,
+    translate: true
+  },
 
-  "original-romaji": [
-    "original",
-    "romaji"
-  ],
+  all: {
+    output: [
+      "original",
+      "romaji",
+      "translation"
+    ],
+    romaji: true,
+    translate: true
+  },
 
-  "original-translation": [
-    "original",
-    "translation"
-  ],
+  "original-romaji-legacy": {
+    serializer: "legacy",
+    output: [
+      "original",
+      "romaji"
+    ],
+    romaji: true,
+    translate: false
+  },
 
-  "romaji-translation": [
-    "romaji",
-    "translation"
-  ],
+  "original-translation-legacy": {
+    serializer: "legacy",
+    output: [
+      "original",
+      "translation"
+    ],
+    romaji: false,
+    translate: true
+  },
 
-  all: [
-    "original",
-    "romaji",
-    "translation"
-  ]
+  "romaji-translation-legacy": {
+    serializer: "legacy",
+    output: [
+      "romaji",
+      "translation"
+    ],
+    romaji: true,
+    translate: true
+  }
+
 };
 
 export default transformProfiles;

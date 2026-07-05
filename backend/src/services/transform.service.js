@@ -4,12 +4,15 @@ import NotFoundError from "../errors/not-found.error.js";
 import { parseLrc } from "../utils/lrc-parser.js";
 import { serializeLrc } from "../utils/lrc-serializer.js";
 import transformProvider from "./transform-provider.service.js";
+import transformProfiles from "../constants/transform-profile.js";
 
 class TransformService {
 
   async applyRomaji(lines) {
     for (const line of lines) {
-      if (!line.original) continue;
+      if (!line.original) {
+        continue;
+      }
 
       line.romaji = await transformProvider.romaji(
         line.original
@@ -21,10 +24,9 @@ class TransformService {
 
   async applyTranslation(lines) {
 
-    const originals =
-      lines.map(
-        line => line.original
-      );
+    const originals = lines.map(
+      line => line.original
+    );
 
     const translations =
       await transformProvider.translate(
@@ -40,15 +42,26 @@ class TransformService {
   }
 
   buildPipeline(options) {
+    const config =
+      transformProfiles[
+        options.profile
+      ];
+
+    // if (!config) {
+    //   throw new Error(
+    //     `Unknown profile: ${options.profile}`
+    //   );
+    // }
+
     const pipeline = [];
 
-    if (options.romaji) {
+    if (config.romaji) {
       pipeline.push(
         this.applyRomaji.bind(this)
       );
     }
 
-    if (options.translate) {
+    if (config.translate) {
       pipeline.push(
         this.applyTranslation.bind(this)
       );
@@ -66,7 +79,8 @@ class TransformService {
       );
     }
 
-    const lyrics = await lyricService.load(song);
+    const lyrics =
+      await lyricService.load(song);
 
     if (!lyrics) {
       throw new NotFoundError(
@@ -74,7 +88,8 @@ class TransformService {
       );
     }
 
-    let result = parseLrc(lyrics);
+    let result =
+      parseLrc(lyrics);
 
     const pipeline =
       this.buildPipeline(options);
@@ -86,7 +101,7 @@ class TransformService {
     return {
       lyrics: serializeLrc(
         result,
-        options.profile ?? "original"
+        options.profile
       )
     };
   }

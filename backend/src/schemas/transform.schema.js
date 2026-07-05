@@ -22,14 +22,13 @@ export const transformLyricsSchema = {
           type: "string",
 
           enum: [
-            "legacy",
-            "original",
-            "romaji",
-            "translation",
             "original-romaji",
             "original-translation",
             "romaji-translation",
-            "all"
+            "all",
+            "original-romaji-legacy",
+            "original-translation-legacy",
+            "romaji-translation-legacy"
           ],
 
           default: "original"
