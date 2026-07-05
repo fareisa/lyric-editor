@@ -8,8 +8,8 @@ export default function Editor() {
 
   const {
     selectedSong,
-    content,
-    setContent,
+    editorContent,
+    setEditorContent,
     loadingLyrics
   } = useEditor();
 
@@ -60,8 +60,12 @@ export default function Editor() {
         height="100%"
         language="plaintext"
         theme="vs-dark"
-        value={content}
-        onChange={(value) => setContent(value ?? "")}
+        value={editorContent}
+        onChange={(value) =>
+          setEditorContent(
+            value ?? ""
+          )
+        }
         options={{
           minimap: {
             enabled: false

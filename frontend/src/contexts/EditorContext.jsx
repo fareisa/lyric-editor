@@ -5,18 +5,25 @@ const EditorContext = createContext();
 export function EditorProvider({ children }) {
 
   const [selectedSong, setSelectedSong] = useState(null);
-  const [content, setContentState] = useState("");
+  const [sourceContent, setSourceContent] = useState("");
+  const [editorContent, setEditorContentState] = useState("");
   const [loadingLyrics, setLoadingLyrics] = useState(false);
-  const [profile, setProfile] = useState("original");
+  const [profile, setProfile] = useState("original-translation");
   const [dirty, setDirty] = useState(false);
 
-  function setContent(value) {
-    setContentState(value);
+  function setEditorContent(value) {
+    setEditorContentState(value);
     setDirty(true);
   }
 
-  function replaceContent(value) {
-    setContentState(value);
+  function replaceEditorContent(value) {
+    setEditorContentState(value);
+    setDirty(false);
+  }
+
+  function loadSourceContent(value) {
+    setSourceContent(value);
+    setEditorContentState(value);
     setDirty(false);
   }
 
@@ -24,9 +31,14 @@ export function EditorProvider({ children }) {
     selectedSong,
     setSelectedSong,
 
-    content,
-    setContent,
-    replaceContent,
+    sourceContent,
+    setSourceContent,
+
+    editorContent,
+    setEditorContent,
+
+    replaceEditorContent,
+    loadSourceContent,
 
     loadingLyrics,
     setLoadingLyrics,
