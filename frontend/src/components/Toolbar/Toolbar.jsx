@@ -2,25 +2,33 @@ import "./Toolbar.css";
 import { useEditor } from "../../contexts/EditorContext";
 import useSaveLyrics from "../../hooks/useSaveLyrics";
 import transformProfiles from "../../constants/transformProfiles";
+import useFetchLyrics from "../../hooks/useFetchLyrics";
 
 export default function Toolbar() {
 
   const {
     dirty,
     profile,
-    setProfile
+    setProfile,
+    selectedSong
   } = useEditor();
 
   const { save } = useSaveLyrics();
+  const { fetch } = useFetchLyrics();
 
   return (
     <footer className="toolbar">
 
-      <button>
+      <button
+        disabled={!selectedSong}
+        onClick={fetch}
+      >
         Fetch
       </button>
 
-      <button>
+      <button
+        disabled={!selectedSong}      
+      >
         Transform
       </button>
 
