@@ -7,8 +7,8 @@ export default function useTransformLyrics() {
   const {
     selectedSong,
     profile,
-    replaceContent,
-    setDirty
+    sourceContent,
+    updateEditorContent
   } = useEditor();
 
   const { confirmDiscard } = useUnsavedChanges();
@@ -23,37 +23,14 @@ export default function useTransformLyrics() {
       return;
     }
 
-    const body = {
-      profile,
-      romaji: false,
-      translate: false
-    };
-
-    if (
-      profile.includes("romaji") ||
-      profile === "all"
-    ) {
-      body.romaji = true;
-    }
-
-    if (
-      profile.includes("translation") ||
-      profile === "all" ||
-      profile === "legacy"
-    ) {
-      body.translate = true;
-    }
-
     const result = await transformLyrics(
       selectedSong.id,
-      body
+      profile
     );
 
-    replaceContent(
+    updateEditorContent(
       result.lyrics ?? ""
     );
-
-    setDirty(true);
 
   }
 

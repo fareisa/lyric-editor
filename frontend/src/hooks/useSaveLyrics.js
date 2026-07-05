@@ -5,8 +5,8 @@ export default function useSaveLyrics() {
 
   const {
     selectedSong,
-    content,
-    setDirty
+    editorContent,
+    saveEditorContent
   } = useEditor();
 
   async function save() {
@@ -17,9 +17,11 @@ export default function useSaveLyrics() {
 
     await saveLyrics(
       selectedSong.id,
-      content
+      editorContent
     );
-    setDirty(false);
+
+    saveEditorContent();
+
   }
 
   return {

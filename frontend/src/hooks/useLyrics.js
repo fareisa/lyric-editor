@@ -4,22 +4,22 @@ import { getLyrics } from "../api/lyrics";
 export default function useLyrics() {
 
   const {
-    loadSourceContent,
+    loadLyricsFromDisk,
     loadingLyrics,
     setLoadingLyrics
   } = useEditor();
 
   async function loadLyrics(song) {
     setLoadingLyrics(true);
-    loadSourceContent("");
+    loadLyricsFromDisk("");
 
     try {
       const result = await getLyrics(song.id);
-      loadSourceContent(
+      loadLyricsFromDisk(
         result.lyrics ?? ""
       );
     } catch {
-      loadSourceContent("");
+      loadLyricsFromDisk("");
     } finally {
       setLoadingLyrics(false);
     }

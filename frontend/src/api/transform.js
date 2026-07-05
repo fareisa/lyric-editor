@@ -1,11 +1,11 @@
 import api from "./api";
 
-export async function transformLyrics(id, body) {
+export async function transformLyrics(id, profile) {
 
   const { data } = await api.post(
     `/songs/${id}/lyrics/transform`,
     {
-      body
+      profile
     }
   );
 

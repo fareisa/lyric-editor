@@ -4,13 +4,14 @@ import useUnsavedChanges from "./useUnsavedChanges";
 
 export default function useFetchLyrics() {
 
-  const { confirmDiscard } = "./useUnsavedChanges";
-
   const {
     selectedSong,
-    replaceContent,
-    setDirty
+    loadFetchedLyrics
   } = useEditor();
+
+  const {
+    confirmDiscard
+  } = useUnsavedChanges();
 
   async function fetch() {
 
@@ -26,13 +27,11 @@ export default function useFetchLyrics() {
       selectedSong.id
     );
 
-    replaceContent(
+    loadFetchedLyrics(
       result.syncedLyrics ??
       result.plainLyrics ??
       ""
     );
-
-    setDirty(true);
 
   }
 

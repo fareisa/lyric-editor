@@ -8,37 +8,46 @@ export function EditorProvider({ children }) {
   const [sourceContent, setSourceContent] = useState("");
   const [editorContent, setEditorContentState] = useState("");
   const [loadingLyrics, setLoadingLyrics] = useState(false);
-  const [profile, setProfile] = useState("original-translation");
+
+  const [profile, setProfile] = useState("original-romaji");
   const [dirty, setDirty] = useState(false);
 
-  function setEditorContent(value) {
+  function updateEditorContent(value) {
     setEditorContentState(value);
     setDirty(true);
   }
 
-  function replaceEditorContent(value) {
-    setEditorContentState(value);
-    setDirty(false);
-  }
-
-  function loadSourceContent(value) {
+  function loadLyricsFromDisk(value) {
     setSourceContent(value);
     setEditorContentState(value);
     setDirty(false);
   }
 
+  function loadFetchedLyrics(value) {
+    setSourceContent(value);
+    setEditorContentState(value);
+    setDirty(true);
+  }
+
+  function saveEditorContent() {
+    setSourceContent(editorContent);
+    setDirty(false);
+  }
+
   const value = {
+
     selectedSong,
     setSelectedSong,
 
     sourceContent,
-    setSourceContent,
 
     editorContent,
-    setEditorContent,
+    updateEditorContent,
 
-    replaceEditorContent,
-    loadSourceContent,
+    loadLyricsFromDisk,
+    loadFetchedLyrics,
+
+    saveEditorContent,
 
     loadingLyrics,
     setLoadingLyrics,
@@ -48,6 +57,7 @@ export function EditorProvider({ children }) {
 
     dirty,
     setDirty
+
   };
 
   return (
