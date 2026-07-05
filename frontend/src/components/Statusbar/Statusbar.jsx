@@ -1,3 +1,17 @@
+import "./Statusbar.css";
+
 export default function Statusbar() {
-  return <footer>Status</footer>;
+
+  return (
+    <footer className="statusbar">
+
+      <span>
+        Ready
+      </span>
+
+      <span>
+        Google Translate
+      </span>
+    </footer>
+  );
 }

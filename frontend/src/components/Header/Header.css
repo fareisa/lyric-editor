@@ -1,6 +1,25 @@
 .header {
+  height: 56px;
   display: flex;
   align-items: center;
-  padding: 0 16px;
-  border-bottom: 1px solid #333;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: var(--bg-light);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 600;
+}
+
+.header input {
+  width: 260px;
+  padding: 8px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: white;
+  border-radius: 6px;
 }

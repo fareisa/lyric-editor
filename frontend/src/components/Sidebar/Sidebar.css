@@ -1,15 +1,29 @@
 .sidebar {
-  overflow-y: auto;
-  border-right: 1px solid #333;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-right: 1px solid var(--border);
+  background: var(--bg-light);
+}
+
+.sidebar-title {
+  padding: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid var(--border);
 }
 
 .song {
-  padding: 6px 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 16px;
   cursor: pointer;
-  border-radius: 6px;
 }
 
 .song:hover {
-  background: #2d2d30;
+  background: var(--bg-hover);
+}
+
+.sidebar {
+  overflow-y: auto;
 }

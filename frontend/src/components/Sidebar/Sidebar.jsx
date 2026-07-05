@@ -1,4 +1,5 @@
 import "./Sidebar.css";
+import { FaMusic } from "react-icons/fa";
 import useSongs from "../../hooks/useSongs";
 
 export default function Sidebar() {
@@ -7,21 +8,23 @@ export default function Sidebar() {
     songs,
     loading
   } = useSongs();
-
-  if (loading)
-    return <div className="sidebar">Loading...</div>;
-
   return (
     <aside className="sidebar">
-      {songs.map(song => (
-        <div
-          key={song.id}
-          className="song"
-        >
-          {song.title}
-        </div>
-      ))}
+      <div className="sidebar-title">
+        Songs
+      </div>
+      {
+        loading ?
+        (<p>Loading...</p>):
+        songs.map(song => (
+          <div key={song.id}className="song">
+            <FaMusic />
+            <span>
+              {song.title}
+            </span>
+          </div>
+        ))
+      }
     </aside>
   );
-
 }
