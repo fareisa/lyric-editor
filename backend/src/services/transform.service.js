@@ -4,6 +4,7 @@ import kuroshiroProvider from "../providers/transform/romaji/kuroshiro.provider.
 import NotFoundError from "../errors/not-found.error.js";
 import { parseLrc } from "../utils/lrc-parser.js";
 import { serializeLrc } from "../utils/lrc-serializer.js";
+import googleProvider from "../providers/transform/translate/google.provider.js";
 
 class TransformService {
 
@@ -20,7 +21,22 @@ class TransformService {
   }
 
   async applyTranslation(lines) {
-    // hmmhoem
+
+    const originals =
+      lines.map(
+        line => line.original
+      );
+
+    const translations =
+      await googleProvider.translateBatch(
+        originals
+      );
+
+    for (let i = 0; i < lines.length; i++) {
+      lines[i].translation =
+        translations[i];
+    }
+
     return lines;
   }
 
