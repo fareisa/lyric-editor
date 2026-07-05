@@ -1,7 +1,10 @@
 import { fetchLyrics } from "../api/fetch";
 import { useEditor } from "../contexts/EditorContext";
+import useUnsavedChanges from "./useUnsavedChanges";
 
 export default function useFetchLyrics() {
+
+  const { confirmDiscard } = "./useUnsavedChanges";
 
   const {
     selectedSong,
@@ -12,6 +15,10 @@ export default function useFetchLyrics() {
   async function fetch() {
 
     if (!selectedSong) {
+      return;
+    }
+
+    if (!confirmDiscard()) {
       return;
     }
 
@@ -26,7 +33,7 @@ export default function useFetchLyrics() {
     );
 
     setDirty(true);
-    
+
   }
 
   return {

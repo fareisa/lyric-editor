@@ -3,6 +3,7 @@ import { FaMusic } from "react-icons/fa";
 import useSongs from "../../hooks/useSongs";
 import useLyrics from "../../hooks/useLyrics";
 import { useEditor } from "../../contexts/EditorContext";
+import useUnsavedChanges from "../../hooks/useUnsavedChanges";
 
 export default function Sidebar() {
 
@@ -12,7 +13,13 @@ export default function Sidebar() {
 
   const { selectedSong, setSelectedSong } = useEditor();
 
+  const { confirmDiscard } = useUnsavedChanges();
+
   async function selectSong(song) {
+
+    if (!confirmDiscard()) {
+      return;
+    }
     setSelectedSong(song);
     await loadLyrics(song);
   }
