@@ -8,16 +8,6 @@ export const transformLyricsSchema = {
       type: "object",
 
       properties: {
-        romaji: {
-          type: "boolean",
-          default: false
-        },
-
-        translate: {
-          type: "boolean",
-          default: false
-        },
-
         profile: {
           type: "string",
 
@@ -31,7 +21,11 @@ export const transformLyricsSchema = {
             "romaji-translation-legacy"
           ],
 
-          default: "original"
+          default: "original-romaji"
+        },
+
+        lyrics: {
+          type: "string"
         }
       }
     },
