@@ -1,0 +1,8 @@
+.statusbar {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  background: #007acc;
+  color: white;
+  font-size: 12px;
+}

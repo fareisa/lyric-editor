@@ -1,0 +1,15 @@
+.sidebar {
+  overflow-y: auto;
+  border-right: 1px solid #333;
+  padding: 10px;
+}
+
+.song {
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.song:hover {
+  background: #2d2d30;
+}
