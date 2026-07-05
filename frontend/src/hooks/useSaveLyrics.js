@@ -5,7 +5,7 @@ export default function useSaveLyrics() {
 
   const {
     selectedSong,
-    lyrics,
+    content,
     setDirty
   } = useEditor();
 
@@ -17,7 +17,7 @@ export default function useSaveLyrics() {
 
     await saveLyrics(
       selectedSong.id,
-      lyrics
+      content
     );
     setDirty(false);
   }

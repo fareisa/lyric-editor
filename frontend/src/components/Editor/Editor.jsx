@@ -1,18 +1,23 @@
 import "./Editor.css";
+import { useEffect } from "react";
 import MonacoEditor from "@monaco-editor/react";
 import { useEditor } from "../../contexts/EditorContext";
-import { useEffect } from "react";
 import useSaveLyrics from "../../hooks/useSaveLyrics";
 
 export default function Editor() {
 
+  const {
+    selectedSong,
+    content,
+    setContent,
+    loadingLyrics
+  } = useEditor();
+
   const { save } = useSaveLyrics();
+
   useEffect(() => {
     function handleKeyDown(e) {
-      if (
-        (e.ctrlKey || e.metaKey) &&
-        e.key === "s"
-      ) {
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
         e.preventDefault();
         save();
       }
@@ -23,19 +28,14 @@ export default function Editor() {
       handleKeyDown
     );
 
-    return () =>
+    return () => {
       window.removeEventListener(
         "keydown",
         handleKeyDown
       );
-  }, [save]);
+    };
 
-  const {
-    selectedSong,
-    lyrics,
-    setLyrics,
-    loadingLyrics
-  } = useEditor();
+  }, [save]);
 
   if (!selectedSong) {
     return (
@@ -60,8 +60,8 @@ export default function Editor() {
         height="100%"
         language="plaintext"
         theme="vs-dark"
-        value={lyrics}
-        onChange={(value) => setLyrics(value ?? "")}
+        value={content}
+        onChange={(value) => setContent(value ?? "")}
         options={{
           minimap: {
             enabled: false
