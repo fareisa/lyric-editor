@@ -3,6 +3,7 @@ import { useEditor } from "../../contexts/EditorContext";
 import useSaveLyrics from "../../hooks/useSaveLyrics";
 import transformProfiles from "../../constants/transformProfiles";
 import useFetchLyrics from "../../hooks/useFetchLyrics";
+import useTransformLyrics from "../../hooks/useTransformLyrics";
 
 export default function Toolbar() {
 
@@ -13,6 +14,7 @@ export default function Toolbar() {
     selectedSong
   } = useEditor();
 
+  const { transform } = useTransformLyrics();
   const { save } = useSaveLyrics();
   const { fetch } = useFetchLyrics();
 
@@ -27,7 +29,8 @@ export default function Toolbar() {
       </button>
 
       <button
-        disabled={!selectedSong}      
+        disabled={!selectedSong}     
+        onClick={transform} 
       >
         Transform
       </button>
