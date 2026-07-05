@@ -27,3 +27,8 @@
 .sidebar {
   overflow-y: auto;
 }
+
+.song.active {
+  background: var(--primary);
+  color: white;
+}
