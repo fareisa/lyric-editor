@@ -11,7 +11,9 @@ export default function useTransformLyrics() {
     updateEditorContent
   } = useEditor();
 
-  const { confirmDiscard } = useUnsavedChanges();
+  const {
+    confirmDiscard
+  } = useUnsavedChanges();
 
   async function transform() {
 
@@ -19,17 +21,23 @@ export default function useTransformLyrics() {
       return;
     }
 
+    if (!sourceContent) {
+      return;
+    }
+
     if (!confirmDiscard()) {
       return;
     }
 
-    const result = await transformLyrics(
-      selectedSong.id,
-      profile
-    );
+    const result =
+      await transformLyrics(
+        selectedSong.id,
+        profile,
+        sourceContent
+      );
 
     updateEditorContent(
-      result.lyrics ?? ""
+      result.lyrics
     );
 
   }

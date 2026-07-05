@@ -1,23 +1,11 @@
 const transformProfiles = [
   {
-    id: "original",
-    name: "Original"
-  },
-  {
-    id: "romaji",
-    name: "Romaji"
-  },
-  {
-    id: "translation",
-    name: "Translation"
+    id: "original-translation",
+    name: "Original + Translation"
   },
   {
     id: "original-romaji",
     name: "Original + Romaji"
-  },
-  {
-    id: "original-translation",
-    name: "Original + Translation"
   },
   {
     id: "romaji-translation",
@@ -28,8 +16,16 @@ const transformProfiles = [
     name: "Original + Romaji + Translation"
   },
   {
-    id: "legacy",
-    name: "Legacy (_BREAK_)"
+    id: "original-romaji-legacy",
+    name: "Original + Romaji (Legacy)"
+  },
+  {
+    id: "original-translation-legacy",
+    name: "Original + Translation (Legacy)"
+  },
+  {
+    id: "romaji-translation-legacy",
+    name: "Romaji + Translation (Legacy)"
   }
 ];
 

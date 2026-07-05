@@ -9,7 +9,7 @@ export function EditorProvider({ children }) {
   const [editorContent, setEditorContentState] = useState("");
   const [loadingLyrics, setLoadingLyrics] = useState(false);
 
-  const [profile, setProfile] = useState("original-romaji");
+  const [profile, setProfile] = useState("original-translation");
   const [dirty, setDirty] = useState(false);
 
   function updateEditorContent(value) {
