@@ -1,10 +1,9 @@
 import songService from "./song.service.js";
 import lyricService from "./lyric.service.js";
-import kuroshiroProvider from "../providers/transform/romaji/kuroshiro.provider.js";
 import NotFoundError from "../errors/not-found.error.js";
 import { parseLrc } from "../utils/lrc-parser.js";
 import { serializeLrc } from "../utils/lrc-serializer.js";
-import googleProvider from "../providers/transform/translate/google.provider.js";
+import transformProvider from "./transform-provider.service.js";
 
 class TransformService {
 
@@ -12,7 +11,7 @@ class TransformService {
     for (const line of lines) {
       if (!line.original) continue;
 
-      line.romaji = await kuroshiroProvider.convert(
+      line.romaji = await transformProvider.romaji(
         line.original
       );
     }
@@ -28,7 +27,7 @@ class TransformService {
       );
 
     const translations =
-      await googleProvider.translateBatch(
+      await transformProvider.translate(
         originals
       );
 
