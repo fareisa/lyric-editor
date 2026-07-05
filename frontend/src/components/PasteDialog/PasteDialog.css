@@ -1,0 +1,43 @@
+.paste-editor {
+  width: 100%;
+  min-height: 320px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg);
+  color: inherit;
+  font: inherit;
+  font-family: monospace;
+}
+
+.paste-editor:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.paste-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.paste-actions button {
+  min-width: 90px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+}
+
+.paste-actions button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.paste-actions button:hover:not(:disabled) {
+  opacity: .9;
+}

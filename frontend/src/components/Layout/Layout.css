@@ -12,7 +12,7 @@ body,
 
 .layout {
   display: grid;
-  grid-template-rows: 56px 1fr 48px 24px;
+  grid-template-rows: 56px 1fr auto 24px;
   height: 100vh;
   overflow: hidden;
 }

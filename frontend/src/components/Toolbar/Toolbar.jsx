@@ -1,62 +1,120 @@
 import "./Toolbar.css";
+import { useState } from "react";
 import { useEditor } from "../../contexts/EditorContext";
-import useSaveLyrics from "../../hooks/useSaveLyrics";
-import transformProfiles from "../../constants/transformProfiles";
 import useFetchLyrics from "../../hooks/useFetchLyrics";
 import useTransformLyrics from "../../hooks/useTransformLyrics";
+import useSaveLyrics from "../../hooks/useSaveLyrics";
+import transformProfiles from "../../constants/transformProfiles";
+import SourceDialog from "../SourceDialog/SourceDialog";
 
 export default function Toolbar() {
-
   const {
     dirty,
     profile,
     setProfile,
-    selectedSong
+    selectedSong,
+    sourceType
   } = useEditor();
 
+  const { fetch } = useFetchLyrics();
   const { transform } = useTransformLyrics();
   const { save } = useSaveLyrics();
-  const { fetch } = useFetchLyrics();
+
+  const [sourceDialogOpen, setSourceDialogOpen] = useState(false);
+
+  function getSourceLabel() {
+    switch (sourceType) {
+      case "external":
+        return "🌐 External";
+      case "manual":
+        return "📋 Manual";
+      default:
+        return "📁 Local";
+    }
+  }
 
   return (
-    <footer className="toolbar">
+    <>
+      <footer className="toolbar">
+        <div className="toolbar-status">
+          <div className="toolbar-status-item">
+            <span>Source:</span>
 
-      <button
-        disabled={!selectedSong}
-        onClick={fetch}
-      >
-        Fetch
-      </button>
+            <button
+              className="toolbar-status-button"
+              disabled={!selectedSong}
+              onClick={() => setSourceDialogOpen(true)}
+            >
+              {getSourceLabel()} ▼
+            </button>
+          </div>
 
-      <button
-        disabled={!selectedSong}     
-        onClick={transform} 
-      >
-        Transform
-      </button>
+          <div className="toolbar-status-item">
+            <span>Profile:</span>
 
-      <button
-        disabled={!dirty}
-        onClick={save}
-      >
-        Save
-      </button>
+            <select
+              value={profile}
+              onChange={(e) => setProfile(e.target.value)}
+            >
+              {transformProfiles.map((item) => (
+                <option
+                  key={item.id}
+                  value={item.id}
+                >
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-      <select
-        value={profile}
-        onChange={(e) => setProfile(e.target.value)}
-      >
-        {transformProfiles.map((item) => (
-          <option
-            key={item.id}
-            value={item.id}
+          <div className="toolbar-status-item">
+            {dirty ? (
+              <span className="status-unsaved">
+                ● Unsaved Changes
+              </span>
+            ) : (
+              <span className="status-saved">
+                ✓ Saved
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="toolbar-actions">
+          <button
+            disabled={!selectedSong}
+            onClick={fetch}
           >
-            {item.name}
-          </option>
-        ))}
-      </select>
+            Fetch
+          </button>
 
-    </footer>
+          <button
+            disabled={!selectedSong}
+            onClick={() => setSourceDialogOpen(true)}
+          >
+            Change Source
+          </button>
+
+          <button
+            disabled={!selectedSong}
+            onClick={transform}
+          >
+            Transform
+          </button>
+
+          <button
+            disabled={!dirty}
+            onClick={save}
+          >
+            Save
+          </button>
+        </div>
+      </footer>
+
+      <SourceDialog
+        open={sourceDialogOpen}
+        onClose={() => setSourceDialogOpen(false)}
+      />
+    </>
   );
-
 }

@@ -1,6 +1,9 @@
 import "./SourceDialog.css";
 import { useState } from "react";
 import Modal from "../Modal/Modal";
+import PasteDialog from "../PasteDialog/PasteDialog";
+import useSourceManager from "../../hooks/useSourceManager";
+import { useEditor } from "../../contexts/EditorContext";
 
 const sources = [
   {
@@ -27,85 +30,84 @@ export default function SourceDialog({
   open,
   onClose
 }) {
+  const [selected, setSelected] = useState("local");
+  const [pasteOpen, setPasteOpen] = useState(false);
 
-  const [selected, setSelected] =
-    useState("local");
+  const { loadSourceLyrics } = useEditor();
+  const { selectSource } = useSourceManager();
 
-  function handleContinue() {
+  async function handleContinue() {
+    if (selected === "manual") {
+      onClose();
+      setPasteOpen(true);
+      return;
+    }
 
-    console.log(
-      "Selected:",
-      selected
-    );
-
+    await selectSource(selected);
     onClose();
+  }
 
+  function handlePaste(lyrics) {
+    loadSourceLyrics({
+      type: "manual",
+      lyrics,
+      dirty: true
+    });
+
+    setPasteOpen(false);
   }
 
   return (
-
-    <Modal
-      open={open}
-      title="Select Source"
-      onClose={onClose}
-    >
-
-      <div className="source-list">
-
-        {sources.map(source => (
-
-          <button
-            key={source.id}
-            className={
-              selected === source.id
-                ? "source-card active"
-                : "source-card"
-            }
-            onClick={() =>
-              setSelected(source.id)
-            }
-          >
-
-            <div className="source-icon">
-              {source.icon}
-            </div>
-
-            <div>
-
-              <div className="source-title">
-                {source.title}
+    <>
+      <Modal
+        open={open}
+        title="Select Source"
+        onClose={onClose}
+      >
+        <div className="source-list">
+          {sources.map(source => (
+            <button
+              key={source.id}
+              className={
+                selected === source.id
+                  ? "source-card active"
+                  : "source-card"
+              }
+              onClick={() => setSelected(source.id)}
+            >
+              <div className="source-icon">
+                {source.icon}
               </div>
 
-              <div className="source-description">
-                {source.description}
+              <div>
+                <div className="source-title">
+                  {source.title}
+                </div>
+
+                <div className="source-description">
+                  {source.description}
+                </div>
               </div>
+            </button>
+          ))}
+        </div>
 
-            </div>
-
+        <div className="source-actions">
+          <button onClick={onClose}>
+            Cancel
           </button>
 
-        ))}
+          <button onClick={handleContinue}>
+            Continue
+          </button>
+        </div>
+      </Modal>
 
-      </div>
-
-      <div className="source-actions">
-
-        <button
-          onClick={onClose}
-        >
-          Cancel
-        </button>
-
-        <button
-          onClick={handleContinue}
-        >
-          Continue
-        </button>
-
-      </div>
-
-    </Modal>
-
+      <PasteDialog
+        open={pasteOpen}
+        onClose={() => setPasteOpen(false)}
+        onApply={handlePaste}
+      />
+    </>
   );
-
 }

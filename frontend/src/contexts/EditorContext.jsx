@@ -14,7 +14,7 @@ export function EditorProvider({ children }) {
   const [loadingLyrics, setLoadingLyrics] = useState(false);
 
   const [profile, setProfile] = useState(
-    "original-romaji"
+    "original-translation"
   );
 
   const [dirty, setDirty] = useState(false);
