@@ -13,8 +13,6 @@ const parsed = parseLrc(lyrics);
 console.log(parsed);
 
 console.log(
-  serializeLrc(parsed, ["original"]),
-  serializeLrc(parsed, ["translation"]),
-  serializeLrc(parsed, ["original", "translation"])
+  serializeLrc(parsed, ["original-translation"])
 );
 

@@ -1,5 +1,4 @@
 import Fastify from "fastify";
-
 import errorHandler from "./plugins/error-handler.js";
 import songsRoutes from "./routes/songs.routes.js";
 

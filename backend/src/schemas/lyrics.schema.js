@@ -1,7 +1,4 @@
-import { 
-  idParamSchema 
-} 
-from "./common.schema.js";
+import { idParamSchema } from "./common.schema.js";
 
 export const getLyricsSchema = {
   schema: {

@@ -1,29 +1,8 @@
-import {
-    listSongsSchema
-}
-from "../schemas/songs.schema.js";
-
-import {
-    getLyricsSchema,
-    saveLyricsSchema,
-    fetchLyricsSchema
-}
-from "../schemas/lyrics.schema.js";
-
-import {
-  listSongs,
-  getLyrics,
-  saveLyrics,
-  fetchLyrics
-} from "../handlers/songs.handler.js";
-
-import {
-  transformLyricsSchema
-} from "../schemas/transform.schema.js";
-
-import {
-  transformLyrics
-} from "../handlers/transform.handler.js";
+import { listSongsSchema } from "../schemas/songs.schema.js";
+import { getLyricsSchema, saveLyricsSchema, fetchLyricsSchema } from "../schemas/lyrics.schema.js";
+import { listSongs, getLyrics, saveLyrics, fetchLyrics } from "../handlers/songs.handler.js";
+import { transformLyricsSchema } from "../schemas/transform.schema.js";
+import { transformLyrics } from "../handlers/transform.handler.js";
 
 export default async function (app) {
 

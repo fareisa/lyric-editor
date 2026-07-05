@@ -1,10 +1,7 @@
 import songService from "./song.service.js";
 import lyricService from "./lyric.service.js";
-
 import kuroshiroProvider from "../providers/transform/romaji/kuroshiro.provider.js";
-
 import NotFoundError from "../errors/not-found.error.js";
-
 import { parseLrc } from "../utils/lrc-parser.js";
 import { serializeLrc } from "../utils/lrc-serializer.js";
 
@@ -22,29 +19,59 @@ class TransformService {
     return lines;
   }
 
+  async applyTranslation(lines) {
+    // hmmhoem
+    return lines;
+  }
+
+  buildPipeline(options) {
+    const pipeline = [];
+
+    if (options.romaji) {
+      pipeline.push(
+        this.applyRomaji.bind(this)
+      );
+    }
+
+    if (options.translate) {
+      pipeline.push(
+        this.applyTranslation.bind(this)
+      );
+    }
+
+    return pipeline;
+  }
+
   async transform(songId, options) {
     const song = songService.get(songId);
 
     if (!song) {
-      throw new NotFoundError("Song not found");
+      throw new NotFoundError(
+        "Song not found"
+      );
     }
 
     const lyrics = await lyricService.load(song);
 
     if (!lyrics) {
-      throw new NotFoundError("Lyrics not found");
+      throw new NotFoundError(
+        "Lyrics not found"
+      );
     }
 
     let result = parseLrc(lyrics);
 
-    if (options.romaji) {
-      result = await this.applyRomaji(result);
+    const pipeline =
+      this.buildPipeline(options);
+
+    for (const step of pipeline) {
+      result = await step(result);
     }
 
     return {
       lyrics: serializeLrc(
         result,
-        options.output ?? ["original"]
+        options.profile ?? "original"
       )
     };
   }
