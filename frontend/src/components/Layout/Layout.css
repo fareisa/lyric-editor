@@ -21,4 +21,9 @@ body,
   display: grid;
   grid-template-columns: 320px 1fr;
   overflow: hidden;
+  min-height: 0;
+}
+
+.layout-body > * {
+  min-height: 0;
 }

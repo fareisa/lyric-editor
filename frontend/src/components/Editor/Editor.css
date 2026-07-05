@@ -1,8 +1,4 @@
 .editor {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  background: var(--bg);
+  height: 100%;
+  overflow: hidden;
 }
