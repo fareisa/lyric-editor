@@ -1,32 +1,51 @@
 import "./Toolbar.css";
+import { useEditor } from "../../contexts/EditorContext";
+import useSaveLyrics from "../../hooks/useSaveLyrics";
 import transformProfiles from "../../constants/transformProfiles";
 
 export default function Toolbar() {
+
+  const {
+    dirty,
+    profile,
+    setProfile
+  } = useEditor();
+
+  const { save } = useSaveLyrics();
+
   return (
     <footer className="toolbar">
+
       <button>
         Fetch
       </button>
-      
+
       <button>
         Transform
       </button>
-      
-      <button>
+
+      <button
+        disabled={!dirty}
+        onClick={save}
+      >
         Save
       </button>
-        
-      <select>
-        {transformProfiles.map(profile => (
+
+      <select
+        value={profile}
+        onChange={(e) => setProfile(e.target.value)}
+      >
+        {transformProfiles.map((item) => (
           <option
-            key={profile.id}
-            value={profile.id}
+            key={item.id}
+            value={item.id}
           >
-            {profile.name}
+            {item.name}
           </option>
         ))}
       </select>
-      
+
     </footer>
   );
+
 }

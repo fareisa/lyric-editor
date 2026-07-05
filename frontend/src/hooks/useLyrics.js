@@ -4,7 +4,7 @@ import { getLyrics } from "../api/lyrics";
 export default function useLyrics() {
 
   const {
-    setLyrics,
+    loadLyrics: setLoadedLyrics,
     loadingLyrics,
     setLoadingLyrics
   } = useEditor();
@@ -12,15 +12,13 @@ export default function useLyrics() {
   async function loadLyrics(song) {
     setLoadingLyrics(true);
 
-    // Clear previous lyrics immediately
-    setLyrics("");
+    setLoadedLyrics("");
 
     try {
       const result = await getLyrics(song.id);
-      setLyrics(result.lyrics ?? "");
-    } catch (err) {
-      // No lyrics found
-      setLyrics("No Lyric yet");
+      setLoadedLyrics(result.lyrics ?? "");
+    } catch {
+      setLoadedLyrics("");
     } finally {
       setLoadingLyrics(false);
     }

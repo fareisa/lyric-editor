@@ -1,8 +1,34 @@
 import "./Editor.css";
 import MonacoEditor from "@monaco-editor/react";
 import { useEditor } from "../../contexts/EditorContext";
+import { useEffect } from "react";
+import useSaveLyrics from "../../hooks/useSaveLyrics";
 
 export default function Editor() {
+
+  const { save } = useSaveLyrics();
+  useEffect(() => {
+    function handleKeyDown(e) {
+      if (
+        (e.ctrlKey || e.metaKey) &&
+        e.key === "s"
+      ) {
+        e.preventDefault();
+        save();
+      }
+    }
+
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+
+    return () =>
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+  }, [save]);
 
   const {
     selectedSong,

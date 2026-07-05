@@ -5,10 +5,20 @@ const EditorContext = createContext();
 export function EditorProvider({ children }) {
 
   const [selectedSong, setSelectedSong] = useState(null);
-  const [lyrics, setLyrics] = useState("");
   const [loadingLyrics, setLoadingLyrics] = useState(false);
   const [profile, setProfile] = useState("original");
   const [dirty, setDirty] = useState(false);
+  const [lyrics, setLyricsState] = useState("");
+
+  function setLyrics(value) {
+    setLyricsState(value);
+    setDirty(true);
+  }
+
+  function loadLyrics(value) {
+    setLyricsState(value);
+    setDirty(false);
+  }
 
   const value = {
     selectedSong,
@@ -16,6 +26,7 @@ export function EditorProvider({ children }) {
 
     lyrics,
     setLyrics,
+    loadLyrics,
 
     loadingLyrics,
     setLoadingLyrics,
