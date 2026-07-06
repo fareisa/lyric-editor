@@ -5,7 +5,7 @@ Theres container version you can see at `docker-compose.yml`
 what it can do ?
 1. ofcourse editing lyric
 2. support multiple source. Local, fetch (liblrc only) and paste
-3. support transfrom lyric from japanese accent using kurojiroanalyzer and kuroshiro
+3. support transfrom lyric from japanese accent using kuromojianalyzer and kuroshiro
 4. support translation using google translate endpoint (https://github.com/ssut/py-googletrans/issues/268)
 5. for transform and translation, result can be in different profile you can see at file `backend/src/constants/transform-profile.js`
 
