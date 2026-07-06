@@ -29,7 +29,7 @@ COPY backend/ ./
 FROM node:22-bookworm-slim
 
 RUN apt-get update && \
-  apt-get install -y --no-install-recommends nginx && \
+  apt-get install -y --no-install-recommends nginx curl && \
   rm -f /etc/nginx/sites-enabled/default && \
   rm -rf /var/lib/apt/lists/*
 

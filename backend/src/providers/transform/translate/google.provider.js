@@ -3,7 +3,7 @@ import axios from "axios";
 class GoogleProvider {
   #cache = new Map();
 
-  async translate(text, target = "en") {
+  async translate(text, target) {
     if (!text) {
       return "";
     }
@@ -37,7 +37,7 @@ class GoogleProvider {
     return translated;
   }
 
-  async translateBatch(texts, target = "en") {
+  async translateBatch(texts, target) {
     const result = [];
 
     for (const text of texts) {

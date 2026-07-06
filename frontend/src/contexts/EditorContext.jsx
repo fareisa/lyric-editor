@@ -17,6 +17,8 @@ export function EditorProvider({ children }) {
   const [busy, setBusy] = useState(false);
   const [busyMessage, setBusyMessage] = useState("");
 
+  const [translationTarget, setTranslationTarget] = useState("en");
+
   function beginBusy(message) {
     setBusy(true);
     setBusyMessage(message);
@@ -77,6 +79,9 @@ export function EditorProvider({ children }) {
 
     dirty,
     setDirty,
+
+    translationTarget,
+    setTranslationTarget,
 
     busy,
     busyMessage,

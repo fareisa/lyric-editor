@@ -8,6 +8,7 @@ export default function useTransformLyrics() {
     profile,
     originalContent,
     updateEditorContent,
+    translationTarget,
     beginBusy,
     endBusy
   } = useEditor();
@@ -35,6 +36,7 @@ export default function useTransformLyrics() {
       const result = await transformLyrics(
         selectedSong.id,
         profile,
+        translationTarget.trim() || "en",
         originalContent
       );
 

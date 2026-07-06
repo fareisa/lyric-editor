@@ -39,11 +39,15 @@ class TransformService {
 
   }
 
-  async applyTranslation(lines) {
+  async applyTranslation(
+    lines,
+    target = "en"
+  ) {
 
     logger.debug(
       {
-        lines: lines.length
+        lines: lines.length,
+        target
       },
       "Applying translation"
     );
@@ -54,7 +58,8 @@ class TransformService {
 
     const translations =
       await transformProvider.translate(
-        originals
+        originals,
+        target
       );
 
     for (let i = 0; i < lines.length; i++) {
@@ -68,11 +73,15 @@ class TransformService {
 
   }
 
-  buildPipeline(profile) {
+  buildPipeline(
+    profile,
+    target = "en"
+  ) {
 
     logger.debug(
       {
-        profile
+        profile,
+        target
       },
       "Building transform pipeline"
     );
@@ -108,7 +117,11 @@ class TransformService {
     if (config.translate) {
 
       pipeline.push(
-        this.applyTranslation.bind(this)
+        lines =>
+          this.applyTranslation(
+            lines,
+            target
+          )
       );
 
     }
@@ -168,7 +181,8 @@ class TransformService {
     logger.info(
       {
         songId,
-        profile: options.profile
+        profile: options.profile,
+        target: options.target
       },
       "Transform started"
     );
@@ -204,7 +218,8 @@ class TransformService {
 
       const pipeline =
         this.buildPipeline(
-          options.profile
+          options.profile,
+          options.target ?? "en"
         );
 
       for (const step of pipeline) {
@@ -218,6 +233,7 @@ class TransformService {
         {
           songId,
           profile: options.profile,
+          target: options.target,
           lines: result.length,
           duration: Date.now() - start
         },
@@ -225,12 +241,10 @@ class TransformService {
       );
 
       return {
-
         lyrics: serializeLrc(
           result,
           options.profile
         )
-
       };
 
     } catch (err) {

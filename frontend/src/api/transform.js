@@ -3,6 +3,7 @@ import api from "./api";
 export async function transformLyrics(
   songId,
   profile,
+  target,
   lyrics
 ) {
 
@@ -11,6 +12,7 @@ export async function transformLyrics(
       `/songs/${songId}/lyrics/transform`,
       {
         profile,
+        target,
         lyrics
       }
     );

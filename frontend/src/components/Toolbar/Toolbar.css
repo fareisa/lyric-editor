@@ -85,3 +85,7 @@
   color:#64b5f6;
   font-weight:500;
 }
+
+.toolbar-input {
+  width: 70px;
+}

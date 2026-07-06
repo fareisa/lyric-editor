@@ -24,6 +24,11 @@ export const transformLyricsSchema = {
           default: "original-romaji"
         },
 
+        target: {
+          type: "string",
+          default: "en"
+        },        
+
         lyrics: {
           type: "string"
         }

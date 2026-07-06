@@ -16,6 +16,8 @@ export default function Toolbar() {
     dirty,
     selectedSong,
     sourceType,
+    translationTarget,
+    setTranslationTarget,
     busy,
     busyMessage,
     loadEditor
@@ -89,6 +91,25 @@ export default function Toolbar() {
             </select>
           </div>
 
+          <div className="toolbar-status-item">
+            <span>Target:</span>
+
+            <input
+              className="toolbar-input"
+              type="text"
+              value={translationTarget}
+              placeholder="en"
+              maxLength={16}
+              disabled={
+                busy ||
+                !profile.includes("translation")
+              }
+              onChange={(e) =>
+                setTranslationTarget(e.target.value)
+              }
+            />
+          </div>
+          
           <div className="toolbar-status-item">
             {busy ? (
               <span className="status-busy">
