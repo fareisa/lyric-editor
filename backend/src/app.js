@@ -6,19 +6,7 @@ import songsRoutes from "./routes/songs.routes.js";
 const app = Fastify({
 
   logger: {
-    level: config.logLevel,
-
-    transport:
-      process.env.NODE_ENV !== "production"
-        ? {
-            target: "pino-pretty",
-            options: {
-              colorize: true,
-              translateTime: "SYS:standard",
-              ignore: "pid,hostname"
-            }
-          }
-        : undefined
+    level: config.logLevel
   }
 
 });

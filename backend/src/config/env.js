@@ -5,10 +5,10 @@ dotenv.config();
 export default {
 
 	port:
-		process.env.PORT ?? "3000",
+		process.env.BACKEND_PORT ?? "3000",
 
 	host: 
-		process.env.HOST ?? "0.0.0.0",
+		process.env.BACKEND_HOST ?? "127.0.0.1",
 
 	musicDir:
 		process.env.MUSIC_DIR ?? "/music",
