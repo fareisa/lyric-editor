@@ -1,13 +1,12 @@
 services:
   lyric-editor:
-    image: lyric-editor:test4
+    image: fareisa/lyric-editor:v1.0
     restart: unless-stopped
     ports:
       - 6932:80
     environment:
-      MUSIC_DIR: /music/test
-      BACKEND_HOST: 0.0.0.0
-      BACKEND_PORT: 3000 
+      MUSIC_DIR: /music
+      BACKEND_HOST: 127.0.0.1
+      BACKEND_PORT: 3000
     volumes:
-      - /data-new/music:/music/test
-
+      - /data-new/music:/music
