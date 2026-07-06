@@ -6,6 +6,8 @@ export function EditorProvider({ children }) {
   const [selectedSong, setSelectedSong] = useState(null);
 
   const [sourceType, setSourceType] = useState("local");
+
+  const [originalContent, setOriginalContent] = useState("");
   const [editorContent, setEditorContent] = useState("");
 
   const [profile, setProfile] = useState("original-translation");
@@ -36,17 +38,22 @@ export function EditorProvider({ children }) {
     dirty = false
   }) {
     setSourceType(source);
+
+    setOriginalContent(lyrics);
     setEditorContent(lyrics);
+
     setDirty(dirty);
   }
 
   function saveEditor() {
+    setOriginalContent(editorContent);
     setSourceType("local");
     setDirty(false);
   }
 
   function clearEditor() {
     setSourceType("local");
+    setOriginalContent("");
     setEditorContent("");
     setDirty(false);
   }
@@ -57,7 +64,9 @@ export function EditorProvider({ children }) {
 
     sourceType,
 
+    originalContent,
     editorContent,
+
     updateEditorContent,
     loadEditor,
     saveEditor,
