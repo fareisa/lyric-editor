@@ -2,12 +2,25 @@ export default async function (app) {
 
   app.setErrorHandler((error, request, reply) => {
 
-    request.log.error(error);
+    request.log.error(
+      {
+        err: error,
+        method: request.method,
+        url: request.url
+      },
+      "Request failed"
+    );
+
+    const status =
+      error.statusCode ?? 500;
 
     return reply
-      .code(error.statusCode ?? 500)
+      .code(status)
       .send({
-        error: error.message
+        error:
+          status >= 500
+            ? "Internal Server Error"
+            : error.message
       });
 
   });

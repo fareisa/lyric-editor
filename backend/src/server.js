@@ -1,25 +1,39 @@
 import app from "./app.js";
+
 import config from "./config/env.js";
+
 import songService from "./services/song.service.js";
 
 async function start() {
 
   try {
 
-    await songService.refresh();
+    const songs =
+      await songService.refresh();
 
     await app.listen({
-      host: "0.0.0.0",
+      host: config.host,
       port: config.port
     });
 
-    console.log(
-      `Server running on ${config.port}`
+    app.log.info(
+      {
+        host: config.host,
+        port: config.port,
+        songs
+      },
+      "Server started"
     );
 
   } catch (err) {
-    app.log.error(err);
+
+    app.log.fatal(
+      err,
+      "Failed to start server"
+    );
+
     process.exit(1);
+
   }
 
 }
