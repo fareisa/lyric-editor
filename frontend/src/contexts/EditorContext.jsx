@@ -3,7 +3,6 @@ import { createContext, useContext, useState } from "react";
 const EditorContext = createContext();
 
 export function EditorProvider({ children }) {
-
   const [selectedSong, setSelectedSong] = useState(null);
 
   const [sourceType, setSourceType] = useState(null);
@@ -11,13 +10,22 @@ export function EditorProvider({ children }) {
 
   const [editorContent, setEditorContentState] = useState("");
 
-  const [loadingLyrics, setLoadingLyrics] = useState(false);
-
-  const [profile, setProfile] = useState(
-    "original-translation"
-  );
+  const [profile, setProfile] = useState("original-translation");
 
   const [dirty, setDirty] = useState(false);
+
+  const [busy, setBusy] = useState(false);
+  const [busyMessage, setBusyMessage] = useState("");
+
+  function beginBusy(message) {
+    setBusy(true);
+    setBusyMessage(message);
+  }
+
+  function endBusy() {
+    setBusy(false);
+    setBusyMessage("");
+  }
 
   function updateEditorContent(value) {
     setEditorContentState(value);
@@ -29,27 +37,18 @@ export function EditorProvider({ children }) {
     lyrics,
     dirty
   }) {
-
     setSourceType(type);
-
     setSourceContent(lyrics);
-
     setEditorContentState(lyrics);
-
     setDirty(dirty);
-
   }
 
   function saveEditorContent() {
-
     setSourceContent(editorContent);
-
     setDirty(false);
-
   }
 
   const value = {
-
     selectedSong,
     setSelectedSong,
 
@@ -63,15 +62,16 @@ export function EditorProvider({ children }) {
 
     saveEditorContent,
 
-    loadingLyrics,
-    setLoadingLyrics,
-
     profile,
     setProfile,
 
     dirty,
-    setDirty
+    setDirty,
 
+    busy,
+    busyMessage,
+    beginBusy,
+    endBusy
   };
 
   return (
@@ -79,7 +79,6 @@ export function EditorProvider({ children }) {
       {children}
     </EditorContext.Provider>
   );
-
 }
 
 export function useEditor() {

@@ -3,12 +3,13 @@ import { useEditor } from "../contexts/EditorContext";
 import useUnsavedChanges from "./useUnsavedChanges";
 
 export default function useTransformLyrics() {
-
   const {
     selectedSong,
     profile,
     sourceContent,
-    updateEditorContent
+    updateEditorContent,
+    beginBusy,
+    endBusy
   } = useEditor();
 
   const {
@@ -16,7 +17,6 @@ export default function useTransformLyrics() {
   } = useUnsavedChanges();
 
   async function transform() {
-
     if (!selectedSong) {
       return;
     }
@@ -29,21 +29,27 @@ export default function useTransformLyrics() {
       return;
     }
 
-    const result =
-      await transformLyrics(
+    beginBusy("Transforming lyrics...");
+
+    try {
+      const result = await transformLyrics(
         selectedSong.id,
         profile,
         sourceContent
       );
 
-    updateEditorContent(
-      result.lyrics
-    );
+      updateEditorContent(
+        result.lyrics
+      );
 
+    } finally {
+
+      endBusy();
+
+    }
   }
 
   return {
     transform
   };
-
 }

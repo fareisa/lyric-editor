@@ -3,10 +3,11 @@ import { useEditor } from "../contexts/EditorContext";
 import useUnsavedChanges from "./useUnsavedChanges";
 
 export default function useFetchLyrics() {
-
   const {
     selectedSong,
-    loadSourceLyrics
+    loadSourceLyrics,
+    beginBusy,
+    endBusy
   } = useEditor();
 
   const {
@@ -14,7 +15,6 @@ export default function useFetchLyrics() {
   } = useUnsavedChanges();
 
   async function fetch() {
-
     if (!selectedSong) {
       return;
     }
@@ -23,24 +23,29 @@ export default function useFetchLyrics() {
       return;
     }
 
-    const result =
-      await fetchLyrics(
+    beginBusy("Fetching lyrics...");
+
+    try {
+      const result = await fetchLyrics(
         selectedSong.id
       );
 
-    loadSourceLyrics({
-      type: "external",
-      lyrics:
-        result.syncedLyrics ??
-        result.plainLyrics ??
-        "",
-      dirty: true
-    });
+      loadSourceLyrics({
+        type: "external",
+        lyrics:
+          result.syncedLyrics ??
+          result.plainLyrics ??
+          "",
+        dirty: true
+      });
+    }
 
+    finally {
+      endBusy();
+    }
   }
 
   return {
     fetch
   };
-
 }

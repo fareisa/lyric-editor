@@ -2,16 +2,14 @@ import { useEditor } from "../contexts/EditorContext";
 import { getLyrics } from "../api/lyrics";
 
 export default function useLyrics() {
-
   const {
     loadSourceLyrics,
-    loadingLyrics,
-    setLoadingLyrics
+    beginBusy,
+    endBusy
   } = useEditor();
 
   async function loadLyrics(song) {
-
-    setLoadingLyrics(true);
+    beginBusy("Loading local lyrics...");
 
     loadSourceLyrics({
       type: "local",
@@ -20,9 +18,7 @@ export default function useLyrics() {
     });
 
     try {
-
-      const result =
-        await getLyrics(song.id);
+      const result = await getLyrics(song.id);
 
       loadSourceLyrics({
         type: "local",
@@ -40,15 +36,12 @@ export default function useLyrics() {
 
     } finally {
 
-      setLoadingLyrics(false);
+      endBusy();
 
     }
-
   }
 
   return {
-    loadLyrics,
-    loadingLyrics
+    loadLyrics
   };
-
 }

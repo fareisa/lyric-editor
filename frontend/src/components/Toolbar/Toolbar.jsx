@@ -13,7 +13,9 @@ export default function Toolbar() {
     profile,
     setProfile,
     selectedSong,
-    sourceType
+    sourceType,
+    busy,
+    busyMessage
   } = useEditor();
 
   const { fetch } = useFetchLyrics();
@@ -42,7 +44,7 @@ export default function Toolbar() {
 
             <button
               className="toolbar-status-button"
-              disabled={!selectedSong}
+              disabled={!selectedSong || busy}
               onClick={() => setSourceDialogOpen(true)}
             >
               {getSourceLabel()} ▼
@@ -54,9 +56,10 @@ export default function Toolbar() {
 
             <select
               value={profile}
+              disabled={busy}
               onChange={(e) => setProfile(e.target.value)}
             >
-              {transformProfiles.map((item) => (
+              {transformProfiles.map(item => (
                 <option
                   key={item.id}
                   value={item.id}
@@ -68,7 +71,11 @@ export default function Toolbar() {
           </div>
 
           <div className="toolbar-status-item">
-            {dirty ? (
+            {busy ? (
+              <span className="status-busy">
+                ⏳ {busyMessage}
+              </span>
+            ) : dirty ? (
               <span className="status-unsaved">
                 ● Unsaved Changes
               </span>
@@ -82,28 +89,28 @@ export default function Toolbar() {
 
         <div className="toolbar-actions">
           <button
-            disabled={!selectedSong}
+            disabled={!selectedSong || busy}
             onClick={fetch}
           >
             Fetch
           </button>
 
           <button
-            disabled={!selectedSong}
+            disabled={!selectedSong || busy}
             onClick={() => setSourceDialogOpen(true)}
           >
             Change Source
           </button>
 
           <button
-            disabled={!selectedSong}
+            disabled={!selectedSong || busy}
             onClick={transform}
           >
             Transform
           </button>
 
           <button
-            disabled={!dirty}
+            disabled={!dirty || busy}
             onClick={save}
           >
             Save
