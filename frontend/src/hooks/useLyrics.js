@@ -3,7 +3,7 @@ import { getLyrics } from "../api/lyrics";
 
 export default function useLyrics() {
   const {
-    loadSourceLyrics,
+    loadEditor,
     beginBusy,
     endBusy
   } = useEditor();
@@ -11,25 +11,19 @@ export default function useLyrics() {
   async function loadLyrics(song) {
     beginBusy("Loading local lyrics...");
 
-    loadSourceLyrics({
-      type: "local",
-      lyrics: "",
-      dirty: false
-    });
-
     try {
       const result = await getLyrics(song.id);
 
-      loadSourceLyrics({
-        type: "local",
+      loadEditor({
+        source: "local",
         lyrics: result.lyrics ?? "",
         dirty: false
       });
 
     } catch {
 
-      loadSourceLyrics({
-        type: "local",
+      loadEditor({
+        source: "local",
         lyrics: "",
         dirty: false
       });

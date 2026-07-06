@@ -6,7 +6,7 @@ export default function useTransformLyrics() {
   const {
     selectedSong,
     profile,
-    sourceContent,
+    editorContent,
     updateEditorContent,
     beginBusy,
     endBusy
@@ -21,7 +21,7 @@ export default function useTransformLyrics() {
       return;
     }
 
-    if (!sourceContent) {
+    if (!editorContent.trim()) {
       return;
     }
 
@@ -35,12 +35,10 @@ export default function useTransformLyrics() {
       const result = await transformLyrics(
         selectedSong.id,
         profile,
-        sourceContent
+        editorContent
       );
 
-      updateEditorContent(
-        result.lyrics
-      );
+      updateEditorContent(result.lyrics);
 
     } finally {
 

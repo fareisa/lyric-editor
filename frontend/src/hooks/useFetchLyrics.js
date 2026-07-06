@@ -5,7 +5,7 @@ import useUnsavedChanges from "./useUnsavedChanges";
 export default function useFetchLyrics() {
   const {
     selectedSong,
-    loadSourceLyrics,
+    loadEditor,
     beginBusy,
     endBusy
   } = useEditor();
@@ -30,18 +30,19 @@ export default function useFetchLyrics() {
         selectedSong.id
       );
 
-      loadSourceLyrics({
-        type: "external",
+      loadEditor({
+        source: "external",
         lyrics:
           result.syncedLyrics ??
           result.plainLyrics ??
           "",
         dirty: true
       });
-    }
 
-    finally {
+    } finally {
+
       endBusy();
+
     }
   }
 

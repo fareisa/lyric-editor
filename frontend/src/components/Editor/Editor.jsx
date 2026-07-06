@@ -5,12 +5,12 @@ import { useEditor } from "../../contexts/EditorContext";
 import useSaveLyrics from "../../hooks/useSaveLyrics";
 
 export default function Editor() {
-
   const {
     selectedSong,
     editorContent,
-    setEditorContent,
-    loadingLyrics
+    updateEditorContent,
+    busy,
+    busyMessage
   } = useEditor();
 
   const { save } = useSaveLyrics();
@@ -23,18 +23,11 @@ export default function Editor() {
       }
     }
 
-    window.addEventListener(
-      "keydown",
-      handleKeyDown
-    );
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
+      window.removeEventListener("keydown", handleKeyDown);
     };
-
   }, [save]);
 
   if (!selectedSong) {
@@ -46,7 +39,7 @@ export default function Editor() {
     );
   }
 
-  if (loadingLyrics) {
+  if (busy && busyMessage === "Loading local lyrics...") {
     return (
       <main className="editor">
         Loading...
@@ -62,9 +55,7 @@ export default function Editor() {
         theme="vs-dark"
         value={editorContent}
         onChange={(value) =>
-          setEditorContent(
-            value ?? ""
-          )
+          updateEditorContent(value ?? "")
         }
         options={{
           minimap: {
@@ -78,5 +69,4 @@ export default function Editor() {
       />
     </main>
   );
-
 }

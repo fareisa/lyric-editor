@@ -5,10 +5,8 @@ const EditorContext = createContext();
 export function EditorProvider({ children }) {
   const [selectedSong, setSelectedSong] = useState(null);
 
-  const [sourceType, setSourceType] = useState(null);
-  const [sourceContent, setSourceContent] = useState("");
-
-  const [editorContent, setEditorContentState] = useState("");
+  const [sourceType, setSourceType] = useState("local");
+  const [editorContent, setEditorContent] = useState("");
 
   const [profile, setProfile] = useState("original-translation");
 
@@ -28,23 +26,28 @@ export function EditorProvider({ children }) {
   }
 
   function updateEditorContent(value) {
-    setEditorContentState(value);
+    setEditorContent(value);
     setDirty(true);
   }
 
-  function loadSourceLyrics({
-    type,
+  function loadEditor({
+    source,
     lyrics,
-    dirty
+    dirty = false
   }) {
-    setSourceType(type);
-    setSourceContent(lyrics);
-    setEditorContentState(lyrics);
+    setSourceType(source);
+    setEditorContent(lyrics);
     setDirty(dirty);
   }
 
-  function saveEditorContent() {
-    setSourceContent(editorContent);
+  function saveEditor() {
+    setSourceType("local");
+    setDirty(false);
+  }
+
+  function clearEditor() {
+    setSourceType("local");
+    setEditorContent("");
     setDirty(false);
   }
 
@@ -53,14 +56,12 @@ export function EditorProvider({ children }) {
     setSelectedSong,
 
     sourceType,
-    sourceContent,
 
     editorContent,
     updateEditorContent,
-
-    loadSourceLyrics,
-
-    saveEditorContent,
+    loadEditor,
+    saveEditor,
+    clearEditor,
 
     profile,
     setProfile,

@@ -5,7 +5,7 @@ export default function useSaveLyrics() {
   const {
     selectedSong,
     editorContent,
-    saveEditorContent,
+    saveEditor,
     beginBusy,
     endBusy
   } = useEditor();
@@ -23,7 +23,7 @@ export default function useSaveLyrics() {
         editorContent
       );
 
-      saveEditorContent();
+      saveEditor();
 
     } finally {
 
