@@ -1,54 +1,73 @@
 import "./Toolbar.css";
 import { useState } from "react";
 import { useEditor } from "../../contexts/EditorContext";
+import useLyrics from "../../hooks/useLyrics";
 import useFetchLyrics from "../../hooks/useFetchLyrics";
 import useTransformLyrics from "../../hooks/useTransformLyrics";
 import useSaveLyrics from "../../hooks/useSaveLyrics";
+import useUnsavedChanges from "../../hooks/useUnsavedChanges";
 import transformProfiles from "../../constants/transformProfiles";
-import SourceDialog from "../SourceDialog/SourceDialog";
+import PasteDialog from "../PasteDialog/PasteDialog";
 
 export default function Toolbar() {
   const {
-    dirty,
     profile,
     setProfile,
+    dirty,
     selectedSong,
     sourceType,
     busy,
-    busyMessage
+    busyMessage,
+    loadEditor
   } = useEditor();
 
+  const { loadLyrics } = useLyrics();
   const { fetch } = useFetchLyrics();
   const { transform } = useTransformLyrics();
   const { save } = useSaveLyrics();
 
-  const [sourceDialogOpen, setSourceDialogOpen] = useState(false);
+  const { confirmDiscard } = useUnsavedChanges();
+
+  const [pasteOpen, setPasteOpen] = useState(false);
 
   function getSourceLabel() {
     switch (sourceType) {
       case "external":
         return "🌐 External";
+
       case "manual":
         return "📋 Manual";
+
       default:
         return "📁 Local";
     }
+  }
+
+  function handlePaste(lyrics) {
+    if (!confirmDiscard()) {
+      return;
+    }
+
+    loadEditor({
+      source: "manual",
+      lyrics,
+      dirty: true
+    });
+
+    setPasteOpen(false);
   }
 
   return (
     <>
       <footer className="toolbar">
         <div className="toolbar-status">
+
           <div className="toolbar-status-item">
             <span>Source:</span>
 
-            <button
-              className="toolbar-status-button"
-              disabled={!selectedSong || busy}
-              onClick={() => setSourceDialogOpen(true)}
-            >
-              {getSourceLabel()} ▼
-            </button>
+            <span className="toolbar-source">
+              {getSourceLabel()}
+            </span>
           </div>
 
           <div className="toolbar-status-item">
@@ -85,9 +104,18 @@ export default function Toolbar() {
               </span>
             )}
           </div>
+
         </div>
 
         <div className="toolbar-actions">
+
+          <button
+            disabled={!selectedSong || busy}
+            onClick={() => loadLyrics(selectedSong)}
+          >
+            Reload Local
+          </button>
+
           <button
             disabled={!selectedSong || busy}
             onClick={fetch}
@@ -97,9 +125,9 @@ export default function Toolbar() {
 
           <button
             disabled={!selectedSong || busy}
-            onClick={() => setSourceDialogOpen(true)}
+            onClick={() => setPasteOpen(true)}
           >
-            Change Source
+            Paste
           </button>
 
           <button
@@ -115,12 +143,14 @@ export default function Toolbar() {
           >
             Save
           </button>
+
         </div>
       </footer>
 
-      <SourceDialog
-        open={sourceDialogOpen}
-        onClose={() => setSourceDialogOpen(false)}
+      <PasteDialog
+        open={pasteOpen}
+        onClose={() => setPasteOpen(false)}
+        onApply={handlePaste}
       />
     </>
   );

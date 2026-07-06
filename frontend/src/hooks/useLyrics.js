@@ -1,5 +1,6 @@
 import { useEditor } from "../contexts/EditorContext";
 import { getLyrics } from "../api/lyrics";
+import useUnsavedChanges from "./useUnsavedChanges";
 
 export default function useLyrics() {
   const {
@@ -8,7 +9,19 @@ export default function useLyrics() {
     endBusy
   } = useEditor();
 
+  const {
+    confirmDiscard
+  } = useUnsavedChanges();
+
   async function loadLyrics(song) {
+    if (!song) {
+      return;
+    }
+
+    if (!confirmDiscard()) {
+      return;
+    }
+
     beginBusy("Loading local lyrics...");
 
     try {
