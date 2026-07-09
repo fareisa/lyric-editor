@@ -15,3 +15,9 @@ BACKEND_PORT=3000 (for port binding backend use)
 MUSIC_DIR= /music (music path in container)
 
 **Not well documented yet, may be next time**
+
+still to many issue in my usage
+* forget to build search index
+* theres no notification on nodata fetch
+
+im just too lazy....
